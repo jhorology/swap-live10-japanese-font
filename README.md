@@ -4,7 +4,7 @@ An auto-install script to swap Japanese fonts in Ableton Live 10.
 Live 10用日本語フォントを任意のフォントに置き換えるスクリプトです。
 
 ### はじめに
-Live 10のフォントの日本語部分はNoto Sans CJL JPフォントが使用されていますが、以下の点を改善すべく色々なフォントを試す事を目的としたスクリプトです。
+Live 10のフォントの日本語部分はNoto Sans CJK JPフォントが使用されていますが、以下の点を改善すべく色々なフォントを試す事を目的としたスクリプトです。
  - 私個人の環境(retina 27inch 5k Liveでのスケール120%)では読み辛い、細すぎ。
  - ブラウザにおいて英字とのバランスが悪く、間延びした感。
 
@@ -14,7 +14,7 @@ Live 10のフォントの日本語部分はNoto Sans CJL JPフォントが使用
 ### 実行環境
 
 macOSでの実行をサポートします。Live 10が```/Applications```フォルダにインストールされている必要があります。
-また、curl, unzip, zip, fontforge, python2.xがインストールされている事を前提とします。
+また、fontforge, python2.7.xがインストールされている事を前提とします。
 
 homebrewでのインストール例:
 ```
