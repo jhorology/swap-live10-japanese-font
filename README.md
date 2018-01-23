@@ -1,5 +1,5 @@
 ## swap-live10-japanese-font
-An auto-install script for swapping Japanese fonts in Ableton Live 10.
+An auto-install script to swap Japanese fonts in Ableton Live 10.
 
 Live 10用日本語フォントを任意のフォントに置き換えるスクリプトです。
 
@@ -7,6 +7,7 @@ Live 10用日本語フォントを任意のフォントに置き換えるスク�
 Live 10のフォントの日本語部分はNoto Sans CJL JPフォントが使用されていますが、以下の点を改善すべく色々なフォントを試す事を目的としたスクリプトです。
  - 私個人の環境(retina 27inch 5k Liveでのスケール120%)では読み辛い、細すぎ。
  - ブラウザにおいて英字とのバランスが悪く、間延びした感。
+
 幸い日本語/英字で別々のフォントファイルが使用されているため、デバイス、セッション、アレンジビュー等その他のUIに影響を与える事なく日本語部分だけを変更する事が可能なようです。
 また日本語フォントファイルはファイル名のみで参照されており容易に置き換え可能でした。
 
