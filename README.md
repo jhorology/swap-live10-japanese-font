@@ -14,7 +14,7 @@ Live 10のフォントの日本語部分はNoto Sans CJK JPフォントが使用
 ### 実行環境
 
 macOSでの実行をサポートします。Live 10が```/Applications```フォルダにインストールされている必要があります。
-また、fontforge, python2.7.xがインストールされている事を前提とします。
+また、fontforgeがインストールされている事を前提とします。
 
 homebrewでのインストール例:
 ```
