@@ -54,6 +54,13 @@ Liveが閉じている事を確認し、ターミナルでスクリプトを実�
 ./swap-live10-japanese-fonts.sh [-e edition] -u
 ```
 
+### サンプル
+変更前 NotoSans CJK JP Regular/Bold
+![before](https://raw.githubusercontent.com/jhorology/swap-live10-japanese-font/img/img/before.png)
+
+変更後 Mgen+ 2cp Medium/HEavy
+![after](https://raw.githubusercontent.com/jhorology/swap-live10-japanese-font/img/img/after.png)
+
 ### Notes
  - 本スクリプトおよび生成されたフォントの使用に関連する障害その他一切の責任は使用者が負うものとします。
  - 本スクリプトの改定、配布は自由に行ってください。筆者への連絡不要です。
