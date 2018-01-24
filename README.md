@@ -26,7 +26,7 @@ echo 'import site; site.addsitedir("/usr/local/lib/python2.7/site-packages")' >>
 ### フォントのインストール
 Liveが閉じている事を確認し、ターミナルでスクリプトを実行してください。
 ```
-./swap-live10-japanese-fonts.sh [-e edition] regular_font bold_font
+swap-live10-japanese-fonts.sh [-e edition] regular_font bold_font
 ```
  - -e edition
  Liveアプリケーション名の接尾語(beta|intro|lite|standard|suite)を指定します。省略時デフォルトは"suite"です。
@@ -39,7 +39,7 @@ Liveが閉じている事を確認し、ターミナルでスクリプトを実�
 
 実行例:
 ```
-./swap-live10-japanese-fonts.sh -e beta mgenplus-2cp-medium.ttf mgenplus-2cp-heavy.ttf
+swap-live10-japanese-fonts.sh -e beta mgenplus-2cp-medium.ttf mgenplus-2cp-heavy.ttf
 ```
 
 以下の2ファイルが置き換えられます。
@@ -51,15 +51,18 @@ Liveが閉じている事を確認し、ターミナルでスクリプトを実�
 ### アンインストール
 変更前のファイル.origを元に戻します。
 ```
-./swap-live10-japanese-fonts.sh [-e edition] -u
+swap-live10-japanese-fonts.sh [-e edition] -u
 ```
 
 ### サンプル
 #### 変更前 NotoSans CJK JP Regular/Bold Retina Display Scale 120%
 <img src="https://raw.githubusercontent.com/jhorology/swap-live10-japanese-font/img/img/before.png" width="525"/>
 
-#### 変更後 Mgen+ 2cp Medium/Heavy Retina Display Scale 120%
-<img src="https://raw.githubusercontent.com/jhorology/swap-live10-japanese-font/img/img/after.png" width="524"/>
+#### 変更例 Mgen+ 2cp Medium/Heavy Retina Display Scale 120%
+<img src="https://raw.githubusercontent.com/jhorology/swap-live10-japanese-font/img/img/mgenplus.png" width="524"/>
+
+#### 変更例 GenEi Gothic P SemiBold/Heavy Retina Display Scale 120%
+<img src="https://raw.githubusercontent.com/jhorology/swap-live10-japanese-font/img/img/genei.png" width="525"/>
 
 ### Notes
  - 本スクリプトおよび生成されたフォントの使用に関連する障害その他一切の責任は使用者が負うものとします。

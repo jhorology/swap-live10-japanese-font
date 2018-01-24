@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
-PWD=`dirname $0`
-cd ${PWD}
+# PWD=`dirname $0`
+# cd ${PWD}
 
 # functions
 usage_exit() {
