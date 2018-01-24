@@ -56,10 +56,10 @@ Liveが閉じている事を確認し、ターミナルでスクリプトを実�
 
 ### サンプル
 変更前 NotoSans CJK JP Regular/Bold
-![before](https://raw.githubusercontent.com/jhorology/swap-live10-japanese-font/img/img/before.png =525x627)
+<img src="https://raw.githubusercontent.com/jhorology/swap-live10-japanese-font/img/img/before.png" width="525"/>
 
 変更後 Mgen+ 2cp Medium/HEavy
-![after](https://raw.githubusercontent.com/jhorology/swap-live10-japanese-font/img/img/after.png =524x627)
+<img src="https://raw.githubusercontent.com/jhorology/swap-live10-japanese-font/img/img/after.png" width="524"/>
 
 ### Notes
  - 本スクリプトおよび生成されたフォントの使用に関連する障害その他一切の責任は使用者が負うものとします。
