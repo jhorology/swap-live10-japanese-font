@@ -32,7 +32,7 @@ Liveが閉じている事を確認し、ターミナルでスクリプトを実�
  Liveアプリケーション名の接尾語(beta|intro|lite|standard|suite)を指定します。省略時デフォルトは"suite"です。
  - regular_font
  Regularフォントのパスを指定します。指定可能なファイルの拡張子は.ttfまたは.otfです。
- - regular_font
+ - bold_font
  Boldフォントのパスを指定します。指定可能なファイルの拡張子は.ttfまたは.otfです。
  - ttfファイルを指定した場合、otfファイルへ変換を行います。
  - 変更前の元ファイルは.origの拡張子を付け退避します。既に退避したファイルがある場合は上書きしません。

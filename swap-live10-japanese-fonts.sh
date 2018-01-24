@@ -52,8 +52,6 @@ if [ ! "`uname`" = "Darwin" ]; then
     echo
     exit 1
 fi
-       
-
 
 # options
 LIVE10_EDITION='Suite'
@@ -84,13 +82,13 @@ if $UNINSTALL ; then
     if [ -f "${LIVE10_FONTS}/${REGULAR_OTF}.orig" ]; then
         mv -f "${LIVE10_FONTS}/${REGULAR_OTF}.orig" "${LIVE10_FONTS}/${REGULAR_OTF}"
     else
-        echo -e "\nfile: ${LIVE10_FONTS}/${REGULAR_OTF}.orig does not exit.\n"
+        echo -e "\nfile: ${LIVE10_FONTS}/${REGULAR_OTF}.orig does not exist.\n"
         exit 1
     fi
     if [ -f "${LIVE10_FONTS}/${BOLD_OTF}.orig" ]; then
         mv -f "${LIVE10_FONTS}/${BOLD_OTF}.orig" "${LIVE10_FONTS}/${BOLD_OTF}"
     else
-        echo -e "\nfile: ${LIVE10_FONTS}/${BOLD_OTF}.orig does not exit.\n"
+        echo -e "\nfile: ${LIVE10_FONTS}/${BOLD_OTF}.orig does not exist.\n"
         exit 1
     fi
     exit 0
