@@ -58,20 +58,6 @@ font.generate("'"${3}"'")
 '
 }
 
-if [ ! "`uname`" = "Darwin" ]; then
-    echo
-    echo "Unsupported architecture. this script support only macOS."
-    echo
-    exit 1
-fi
-
-num=$(ps aux | grep 'Ableton Live 10' | wc -l)
-if [ $num -gt 1 ]; then
-    echo
-    echo "Ableton Live is running, please close it."
-    echo
-    exit 1
-fi
 # options
 LIVE10_EDITION='Suite'
 UNINSTALL=false
@@ -93,11 +79,56 @@ JP_REGULAR_FONT=$1
 JP_BOLD_FONT=$2
 JP_PUSH2_FONT=$3
 
-LIVE10_FONTS_DIR="/Applications/Ableton Live 10 ${LIVE10_EDITION}.app/Contents/App-Resources/Fonts"
-PUSH2_FONTS_DIR="/Applications/Ableton Live 10 ${LIVE10_EDITION}.app/Contents/Push2/Push2DisplayProcess.app/Contents/Push2/qml/Ableton/Appearance/fonts"
+# configuration
+mac=false;
+cygwin=false;
+case "`uname`" in
+  Darwin*) mac=true;;
+  CYGWIN*) cygwin=true;;
+  *)
+      echo 1>&2
+      echo "Unsupported architecture. this script support only macOS or cygwin." 1>&2
+      usage_exit
+      ;;
+esac
+
+if $mac; then
+    LIVE10_FONTS_DIR="/Applications/Ableton Live 10 ${LIVE10_EDITION}.app/Contents/App-Resources/Fonts"
+    PUSH2_FONTS_DIR="/Applications/Ableton Live 10 ${LIVE10_EDITION}.app/Contents/Push2/Push2DisplayProcess.app/Contents/Push2/qml/Ableton/Appearance/fonts"
+fi
+if $cygwin; then
+    LIVE10_FONTS_DIR="/cygdrive/c/ProgramData/Ableton/Live 10 ${LIVE10_EDITION}/Resources/Fonts"
+    PUSH2_FONTS_DIR="/cygdrive/c/ProgramData/Ableton/Live 10 ${LIVE10_EDITION}/Program/Push2/qml/Ableton/Appearance/fonts"
+fi
+
 LIVE10_REGULAR_OTF=NotoSansCJKjp-Regular.otf
 LIVE10_BOLD_OTF=NotoSansCJKjp-Bold.otf
 PUSH2_BROWSER_OTF=AbletonSansLight-Regular.otf
+
+# check install locations
+if [ ! -d "${LIVE10_FONTS_DIR}" ]; then
+    echo  1>&2
+    echo "this script support only standard installation location."  1>&2
+    usage_exit
+fi
+
+# check running Ableton Live
+if $mac; then
+    num=$(ps aux | grep 'Ableton Live 10' | wc -l)
+    if [ $num -gt 1 ]; then
+        echo  1>&2
+        echo "Ableton Live is running, please close it."  1>&2
+        usage_exit
+    fi
+fi
+if $cygwin; then
+    num=$(ps -W | grep 'Ableton Live 10' | wc -l)
+    if [ $num -gt 0 ]; then
+        echo  1>&2
+        echo "Ableton Live is running, please close it."  1>&2
+        usage_exit
+    fi
+fi
 
 # uninstall
 if $UNINSTALL ; then
@@ -118,12 +149,12 @@ if $UNINSTALL ; then
 fi
 
 if [ -z "${JP_REGULAR_FONT}" ]; then
-    echo -e "\nregular_font is not specified."
+    echo -e "\nregular_font is not specified." 1>&2
     usage_exit
 fi
 
 if [ -z "${JP_BOLD_FONT}" ]; then
-    echo -e "\nbold_font is not specified."
+    echo -e "\nbold_font is not specified."  1>&2
     usage_exit
 fi
 
