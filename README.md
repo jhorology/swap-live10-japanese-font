@@ -27,25 +27,38 @@ echo 'import site; site.addsitedir("/usr/local/lib/python2.7/site-packages")' >>
 ### フォントのインストール
 Liveが閉じている事を確認し、ターミナルでスクリプトを実行してください。
 ```
-swap-live10-japanese-fonts.sh [-e edition] regular_font bold_font [push2_browser_font]
+swap-live10-japanese-fonts.sh [-e edition] [-s scale_ratio] regular_font bold_font [push2_browser_font]
 ```
  - -e edition
+ 
  Liveアプリケーション名の接尾語(beta|intro|lite|standard|suite)を指定します。省略時デフォルトは"suite"です。
- - regular_font
+ 
+ - -s scale_ratio
+ 
+ push2_browser_fontの日本語フォント/オリジナルフォントの比率をパーセンテージで指定します。省略時デフォルトは100です。"オーディオエフェクト"長すぎ！
+
+- regular_font
+ 
  Live10で使用する日本語Regularフォントのパスを指定します。指定可能なファイルの拡張子は.ttfまたは.otfです。
 指定したフォントをNotoSansCJKjp-Regular.otfに置き換えます。
+
 - bold_font
- Live10で使用する日本語Boldフォントのパスを指定します。指定可能なファイルの拡張子は.ttfまたは.otfです。
+
+Live10で使用する日本語Boldフォントのパスを指定します。指定可能なファイルの拡張子は.ttfまたは.otfです。
 指定したフォントをNotoSansCJKjp-Bold.otfに置き換えます。
- - push2_browser_font オプショナル
+
+- push2_browser_font オプショナル
+
 Push2のブラウザで使用する日本語フォントのパスを指定します。指定可能なファイルの拡張子は.ttfまたは.otfです。
 指定したフォントをオリジナルのAbletonSansLight-Regular.otfとマージし置き換えます。
+
 - ttfファイルを指定した場合、otfファイルへ変換を行います。
+
 - 変更前の元フォントファイルは.origの拡張子を付け退避します。既に退避したファイルがある場合は上書きしません。
 
 実行例:
 ```
-swap-live10-japanese-fonts.sh -e suite mgenplus-2cp-medium.ttf mgenplus-2cp-heavy.ttf　mgenplus-2cp-regular.ttf
+swap-live10-japanese-fonts.sh -e suite -s 80 mgenplus-2cp-medium.ttf mgenplus-2cp-heavy.ttf　mgenplus-2cp-regular.ttf
 ```
 
 以下の2ファイルとオプションでpush2用の1ファイルが置き換えられます。
