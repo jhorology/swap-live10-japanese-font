@@ -6,12 +6,13 @@
 # functions
 usage_exit() {
     echo
-    echo "Usage:"
-    echo "  To install: $0 [-e edition] regular_font bold_font [push2_browser_font]" 1>&2
-    echo "    edition: beta|lite|intro|standard|suite   default=suite" 1>&2
-    echo
+    echo "Usage:"  1>&2
+    echo "  To install: $0 [-e edition]  [-s scale_ratio] regular_font bold_font [push2_browser_font]" 1>&2
+    echo "        edition: beta|lite|intro|standard|suite   default=suite" 1>&2
+    echo "    scale_ratio: scale ratio percentage of push2 japanese font / original font  default=100" 1>&2
+    echo  1>&2
     echo "  To uninstall: $0 -u" 1>&2
-    echo
+    echo  1>&2
     exit 1
 }
 
@@ -49,10 +50,14 @@ font.generate("'"${2}"'")
 #  $1: original font path
 #  $2: japanese font path
 #  $3: save path
+#  $4: japanese font scale
 merge_font () {
     fontforge -c '
 import fontforge
 font = fontforge.open("'"${1}"'")
+jpfont = fontforge.open("'"${2}"'")
+scale = int("'"${4}"'")
+font.em = int(jpfont.em * 100 / scale)
 font.mergeFonts("'"${2}"'")
 font.generate("'"${3}"'")
 '
@@ -61,12 +66,15 @@ font.generate("'"${3}"'")
 # options
 LIVE10_EDITION='Suite'
 UNINSTALL=false
-while getopts e:hu OPT
+JP_PUSH2_FONT_SCALE=100
+while getopts e:s:hu OPT
 do
     case $OPT in
         e)  LIVE10_EDITION=`capitalize_word $OPTARG`
             ;;
         u)  UNINSTALL=true
+            ;;
+        s)  JP_PUSH2_FONT_SCALE="$OPTARG"
             ;;
         h)  usage_exit
             ;;
@@ -168,11 +176,14 @@ if (validate_src_font "${JP_BOLD_FONT}"); then
     ttf2otf "${JP_BOLD_FONT}" /tmp/_temporary_live10_jp_bold_font.otf
     JP_BOLD_FONT=/tmp/_temporary_live10_jp_bold_font.otf
 fi
-if [ ! -z "${JP_PUSH2_FONT}" ] && (validate_src_font "${JP_BOLD_FONT}"); then
-    # TTF Font
-    ttf2otf "${JP_PUSH2_FONT}" /tmp/_temporary_push2_jp_browser_font.otf
-    JP_PUSH2_FONT=/tmp/_temporary_push2_jp_browser_font.otf
-fi
+
+# don't need, ttf file can be merged into otf.
+# if [ ! -z "${JP_PUSH2_FONT}" ] && (validate_src_font "${JP_PUSH2_FONT}"); then
+#     # TTF Font
+#     # ttf2otf "${JP_PUSH2_FONT}" /tmp/_temporary_push2_jp_browser_font.otf
+#     JP_PUSH2_FONT=/tmp/_temporary_push2_jp_browser_font.otf
+# fi
+validate_src_font "${JP_PUSH2_FONT}"
 
 # merge jp font into AbletonSansBook-Regular.otf
 if [ -f "${JP_PUSH2_FONT}" ]; then
@@ -180,7 +191,8 @@ if [ -f "${JP_PUSH2_FONT}" ]; then
     if [ -f "${PUSH2_FONTS_DIR}/${PUSH2_BROWSER_OTF}.orig" ]; then
         ORIG_PUSH2_FONT="${PUSH2_FONTS_DIR}/${PUSH2_BROWSER_OTF}.orig"
     fi
-    merge_font "${ORIG_PUSH2_FONT}" "${JP_PUSH2_FONT}" /tmp/_temporary_push2_merged_browser_font.otf
+    echo 'abc' $JP_PUSH2_FONT_SCALE
+    merge_font "${ORIG_PUSH2_FONT}" "${JP_PUSH2_FONT}" /tmp/_temporary_push2_merged_browser_font.otf $JP_PUSH2_FONT_SCALE
     JP_PUSH2_FONT=/tmp/_temporary_push2_merged_browser_font.otf
 fi
 
@@ -210,9 +222,6 @@ if [ -f /tmp/_temporary_live10_jp_regular_font.otf ]; then
 fi
 if [ -f /tmp/_temporary_live10_jp_bold_font.otf ]; then
     rm -f /tmp/_temporary_live10_jp_bold_font.otf
-fi
-if [ -f /tmp/_temporary_push2_jp_browser_font.otf ]; then
-    rm -f /tmp/_temporary_push2_jp_browser_font.otf
 fi
 if [ -f /tmp/_temporary_push2_merged_browser_font.otf ]; then
     rm -f /tmp/_temporary_push2_merged_browser_font.otf
