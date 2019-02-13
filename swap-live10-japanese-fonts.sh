@@ -7,7 +7,7 @@
 usage_exit() {
     echo
     echo "Usage:"  1>&2
-    echo "  To install: $0 [-e edition]  [-s scale_ratio] regular_font bold_font [push2_browser_font]" 1>&2
+    echo "  To install: $0 [-v version] [-e edition]  [-s scale_ratio] regular_font bold_font [push2_browser_font]" 1>&2
     echo "        edition: beta|lite|intro|standard|suite   default=suite" 1>&2
     echo "    scale_ratio: scale ratio percentage of push2 japanese font / original font  default=100" 1>&2
     echo  1>&2
@@ -65,11 +65,14 @@ font.generate("'"${3}"'")
 
 # options
 LIVE10_EDITION='Suite'
+LIVE10_VERSION='10'
 UNINSTALL=false
 JP_PUSH2_FONT_SCALE=100
-while getopts e:s:hu OPT
+while getopts v:e:s:hu OPT
 do
     case $OPT in
+        v)  LIVE10_VERSION="$OPTARG"
+            ;;
         e)  LIVE10_EDITION=`capitalize_word $OPTARG`
             ;;
         u)  UNINSTALL=true
@@ -101,12 +104,12 @@ case "`uname`" in
 esac
 
 if $mac; then
-    LIVE10_FONTS_DIR="/Applications/Ableton Live 10 ${LIVE10_EDITION}.app/Contents/App-Resources/Fonts"
-    PUSH2_FONTS_DIR="/Applications/Ableton Live 10 ${LIVE10_EDITION}.app/Contents/Push2/Push2DisplayProcess.app/Contents/Push2/qml/Ableton/Appearance/fonts"
+    LIVE10_FONTS_DIR="/Applications/Ableton Live ${LIVE10_VERSION} ${LIVE10_EDITION}.app/Contents/App-Resources/Fonts"
+    PUSH2_FONTS_DIR="/Applications/Ableton Live ${LIVE10_VERSION} ${LIVE10_EDITION}.app/Contents/Push2/Push2DisplayProcess.app/Contents/Push2/qml/Ableton/Appearance/fonts"
 fi
 if $cygwin; then
-    LIVE10_FONTS_DIR="/cygdrive/c/ProgramData/Ableton/Live 10 ${LIVE10_EDITION}/Resources/Fonts"
-    PUSH2_FONTS_DIR="/cygdrive/c/ProgramData/Ableton/Live 10 ${LIVE10_EDITION}/Program/Push2/qml/Ableton/Appearance/fonts"
+    LIVE10_FONTS_DIR="/cygdrive/c/ProgramData/Ableton/Live ${LIVE10_VERSION} ${LIVE10_EDITION}/Resources/Fonts"
+    PUSH2_FONTS_DIR="/cygdrive/c/ProgramData/Ableton/Live ${LIVE10_VERSION} ${LIVE10_EDITION}/Program/Push2/qml/Ableton/Appearance/fonts"
 fi
 
 LIVE10_REGULAR_OTF=NotoSansCJKjp-Regular.otf
@@ -183,15 +186,15 @@ fi
 #     # ttf2otf "${JP_PUSH2_FONT}" /tmp/_temporary_push2_jp_browser_font.otf
 #     JP_PUSH2_FONT=/tmp/_temporary_push2_jp_browser_font.otf
 # fi
-validate_src_font "${JP_PUSH2_FONT}"
-
+if [ ! -z "${JP_PUSH2_FONT}" ]; then
+   validate_src_font "${JP_PUSH2_FONT}"
+fi
 # merge jp font into AbletonSansBook-Regular.otf
 if [ -f "${JP_PUSH2_FONT}" ]; then
     ORIG_PUSH2_FONT="${PUSH2_FONTS_DIR}/${PUSH2_BROWSER_OTF}"
     if [ -f "${PUSH2_FONTS_DIR}/${PUSH2_BROWSER_OTF}.orig" ]; then
         ORIG_PUSH2_FONT="${PUSH2_FONTS_DIR}/${PUSH2_BROWSER_OTF}.orig"
     fi
-    echo 'abc' $JP_PUSH2_FONT_SCALE
     merge_font "${ORIG_PUSH2_FONT}" "${JP_PUSH2_FONT}" /tmp/_temporary_push2_merged_browser_font.otf $JP_PUSH2_FONT_SCALE
     JP_PUSH2_FONT=/tmp/_temporary_push2_merged_browser_font.otf
 fi

@@ -6,7 +6,7 @@ Live 10用日本語フォントを任意のフォントに置き換えるスク�
 ### はじめに
 Live 10のフォントの日本語部分はNoto Sans CJK JPフォントが使用されていますが、以下の点を改善すべく色々なフォントを試す事を目的としたスクリプトです。
  - 私個人の環境(retina 27inch 5k Liveでのスケール120%)では読み辛い、細すぎ。
- - ブラウザにおいて英字とのバランスが悪く、間延びした感。
+ - ブラウザにおいてカタカナが等幅なため英字とのバランスが悪く、間延びした感。
  - なぜかPush2用の日本語フォントはインストールされておらず、おそらくQtのfallbackでOSのフォントが使用されておりWindowsとmacOSで違うフォントが使われるという...
 
 幸いLive10では日本語/英字で別々のフォントファイルが使用されているため、デバイス、セッション、アレンジビュー等その他のUIに影響を与える事なく日本語部分だけを変更する事が可能なようです。
@@ -14,7 +14,7 @@ Live 10のフォントの日本語部分はNoto Sans CJK JPフォントが使用
 
 ### 実行環境
 
-macOSでの実行をサポートします。Live 10が```/Applications```フォルダにインストールされている必要があります。
+macOSおよびcygwinでの実行をサポートします。Live 10が標準のフォルダにインストールされている必要があります。
 また、ttfファイルを使用する場合とPush2用のフォントを指定する場合、fontforgeがインストールされている事を前提とします。
 
 homebrewでのインストール例:
@@ -27,9 +27,13 @@ echo 'import site; site.addsitedir("/usr/local/lib/python2.7/site-packages")' >>
 ### フォントのインストール
 Liveが閉じている事を確認し、ターミナルでスクリプトを実行してください。
 ```
-swap-live10-japanese-fonts.sh [-e edition] [-s scale_ratio] regular_font bold_font [push2_browser_font]
+swap-live10-japanese-fonts.sh [-v version] [-e edition] [-s scale_ratio] regular_font bold_font [push2_browser_font]
 ```
  - -e edition
+ 
+ Liveアプリケーション名に含まれるバージョンを指定します。省略時デフォルトは"10"です。
+ 
+ - -v version
  
  Liveアプリケーション名の接尾語(beta|intro|lite|standard|suite)を指定します。省略時デフォルトは"suite"です。
  
@@ -60,18 +64,22 @@ Push2のブラウザで使用する日本語フォントのパスを指定しま
 ```
 swap-live10-japanese-fonts.sh -e suite -s 80 mgenplus-2cp-medium.ttf mgenplus-2cp-heavy.ttf　mgenplus-2cp-regular.ttf
 ```
+```
+# This is my best settings.
+swap-live10-japanese-fonts.sh -v 10.1 -e beta -s 90 Yu\ Gothic\ UI\ Semibold.ttf Yu\ Gothic\ UI\ Bold.ttf Yu\ Gothic\ UI\ Regular.ttf
+```
 
 以下の2ファイルとオプションでpush2用の1ファイルが置き換えられます。
 ```
-/Applications/Ableton Live 10 ${LIVE10_EDITION}.app/Contents/App-Resources/Fonts/NotoSansCJKjp-Regular.otf
-/Applications/Ableton Live 10 ${LIVE10_EDITION}.app/Contents/App-Resources/Fonts/NotoSansCJKjp-Bold.otf
-/Applications/Ableton Live 10 ${LIVE10_EDITION}.app/Contents/Push2/Push2DisplayProcess.app/Contents/Push2/qml/Ableton/Appearance/fonts/AbletonSansLight-Regular.otf
+/Applications/Ableton Live ${LIVE10_VERSION} ${LIVE10_EDITION}.app/Contents/App-Resources/Fonts/NotoSansCJKjp-Regular.otf
+/Applications/Ableton Live ${LIVE10_VERSION} ${LIVE10_EDITION}.app/Contents/App-Resources/Fonts/NotoSansCJKjp-Bold.otf
+/Applications/Ableton Live ${LIVE10_VERSION} ${LIVE10_EDITION}.app/Contents/Push2/Push2DisplayProcess.app/Contents/Push2/qml/Ableton/Appearance/fonts/AbletonSansLight-Regular.otf
 ```
 
 ### アンインストール
 変更前のファイル.origを元に戻します。
 ```
-swap-live10-japanese-fonts.sh [-e edition] -u
+swap-live10-japanese-fonts.sh [-v version] [-e edition] -u
 ```
 
 ### サンプル
