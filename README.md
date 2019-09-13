@@ -31,11 +31,11 @@ swap-live10-japanese-fonts.sh [-v version] [-e edition] [-s scale_ratio] regular
 ```
  - -e edition
  
- Liveアプリケーション名に含まれるバージョンを指定します。省略時デフォルトは"10"です。
+ Liveアプリケーション名の接尾語(beta|intro|lite|standard|suite)を指定します。省略時デフォルトは"suite"です。
  
  - -v version
  
- Liveアプリケーション名の接尾語(beta|intro|lite|standard|suite)を指定します。省略時デフォルトは"suite"です。
+ Liveアプリケーション名に含まれるバージョンを指定します。省略時デフォルトは"10.1"です。
  
  - -s scale_ratio
  
