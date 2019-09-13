@@ -65,7 +65,7 @@ font.generate("'"${3}"'")
 
 # options
 LIVE10_EDITION='Suite'
-LIVE10_VERSION='10'
+LIVE10_VERSION='10.1'
 UNINSTALL=false
 JP_PUSH2_FONT_SCALE=100
 while getopts v:e:s:hu OPT
@@ -93,19 +93,34 @@ JP_PUSH2_FONT=$3
 # configuration
 mac=false;
 cygwin=false;
+wsl=false;
+unsupported=false;
 case "`uname`" in
   Darwin*) mac=true;;
   CYGWIN*) cygwin=true;;
-  *)
-      echo 1>&2
-      echo "Unsupported architecture. this script support only macOS or cygwin." 1>&2
-      usage_exit
+  Linux*)
+      if grep -q Microsoft /proc/version; then
+          wsl=true
+      else
+          unsupported=true
+      fi
       ;;
+  *) unsupported=true;;
 esac
+
+if $unsupported; then
+    echo 1>&2
+    echo "Unsupported architecture. this script support only macOS, WSL or cygwin." 1>&2
+    usage_exit
+fi
 
 if $mac; then
     LIVE10_FONTS_DIR="/Applications/Ableton Live ${LIVE10_VERSION} ${LIVE10_EDITION}.app/Contents/App-Resources/Fonts"
     PUSH2_FONTS_DIR="/Applications/Ableton Live ${LIVE10_VERSION} ${LIVE10_EDITION}.app/Contents/Push2/Push2DisplayProcess.app/Contents/Push2/qml/Ableton/Appearance/fonts"
+fi
+if $wsl; then
+    LIVE10_FONTS_DIR="/mnt/c/ProgramData/Ableton/Live ${LIVE10_VERSION} ${LIVE10_EDITION}/Resources/Fonts"
+    PUSH2_FONTS_DIR="/mnt/c/ProgramData/Ableton/Live ${LIVE10_VERSION} ${LIVE10_EDITION}/Program/Push2/qml/Ableton/Appearance/fonts"
 fi
 if $cygwin; then
     LIVE10_FONTS_DIR="/cygdrive/c/ProgramData/Ableton/Live ${LIVE10_VERSION} ${LIVE10_EDITION}/Resources/Fonts"
